@@ -2,9 +2,12 @@ import fs = require('fs');
 import path = require('path');
 import uuid = require('uuid');
 import * as admin from 'firebase-admin';
+import firebase from 'firebase';
 import { Bucket } from '@google-cloud/storage';
-import { Firestore, DocumentReference, Timestamp, GeoPoint } from '@google-cloud/firestore';
+import { Firestore, DocumentReference } from '@google-cloud/firestore';
 import { MetadataResponse, Metadata } from '@google-cloud/common';
+
+const { GeoPoint, Timestamp } = firebase.firestore;
 
 function fileExist(file: fs.PathLike): boolean {
     try {
