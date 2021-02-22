@@ -2,10 +2,10 @@ import fs = require('fs');
 import path = require('path');
 import uuid = require('uuid');
 import * as admin from 'firebase-admin';
+import * as firebase from 'firebase';
 import { Bucket } from '@google-cloud/storage';
 import { Firestore, DocumentReference } from '@google-cloud/firestore';
 import { MetadataResponse, Metadata } from '@google-cloud/common';
-import { GeoPoint, Timestamp } from '@firebase/firestore-types';
 
 function fileExist(file: fs.PathLike): boolean {
     try {
@@ -199,10 +199,10 @@ class CollectionSeed {
                     filteredObject = DELETE;
                     context.postDocActions.push(() => subcollection.importDocuments(admin));
                 } else if (o instanceof GeoPointSeed) {
-                    filteredObject = new GeoPoint(o.latitude, o.longitude);
+                    filteredObject = new firebase.firestore.GeoPoint(o.latitude, o.longitude);
                 } else if (o instanceof Date) {
-                    filteredObject = Timestamp.fromDate(o);
-                } else if (o instanceof Timestamp) {
+                    filteredObject = firebase.firestore.Timestamp.fromDate(o);
+                } else if (o instanceof firebase.firestore.Timestamp) {
                     filteredObject = o;
                 } else if (o instanceof Array || o instanceof Object) {
                     filteredObject = o instanceof Array ? Array(o.length) : {};
